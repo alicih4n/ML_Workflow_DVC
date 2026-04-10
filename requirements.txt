@@ -1,0 +1,11 @@
+dvc
+mlxtend
+torch
+torchvision
+PyYAML
+numpy
+pandas
+scikit-learn
+matplotlib
+jupyter
+notebook

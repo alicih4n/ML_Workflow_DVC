@@ -1,0 +1,64 @@
+schema: '2.0'
+stages:
+  prepare:
+    cmd: /opt/homebrew/Caskroom/miniconda/base/bin/python src/prepare.py
+    deps:
+    - path: src/prepare.py
+      hash: md5
+      md5: da63ea54f3de4b81761bd4aee8ecebf5
+      size: 1170
+    outs:
+    - path: data/processed
+      hash: md5
+      md5: 5a29b4666ae92c1a9d88cf2ed03ab1b0.dir
+      size: 220083362
+      nfiles: 2
+  train:
+    cmd: /opt/homebrew/Caskroom/miniconda/base/bin/python src/train.py
+    deps:
+    - path: data/processed
+      hash: md5
+      md5: 5a29b4666ae92c1a9d88cf2ed03ab1b0.dir
+      size: 220083362
+      nfiles: 2
+    - path: src/train.py
+      hash: md5
+      md5: 61274e47778bbae993bb44c0753ac5ac
+      size: 4492
+    params:
+      params.yaml:
+        activation: relu
+        batch_size: 64
+        epochs: 5
+        lr: 0.001
+        momentum: 0.9
+        optimizer: adam
+    outs:
+    - path: metrics.json
+      hash: md5
+      md5: 32abe31d3f92e7adef3e060917584e77
+      size: 60
+    - path: model.pt
+      hash: md5
+      md5: cd148468b8335f186ea56195f04114d3
+      size: 56841
+  predict:
+    cmd: /opt/homebrew/Caskroom/miniconda/base/bin/python src/predict.py
+    deps:
+    - path: data/processed/test.pt
+      hash: md5
+      md5: 5acb04ff21805dbe4ed9a034998f6b15
+      size: 31441677
+    - path: model.pt
+      hash: md5
+      md5: cd148468b8335f186ea56195f04114d3
+      size: 56841
+    - path: src/predict.py
+      hash: md5
+      md5: 5dd72e8cb5d0c5bf27519f9a9af62096
+      size: 2177
+    outs:
+    - path: predictions.json
+      hash: md5
+      md5: c80e8d3424d1aee3796592fca885ff60
+      size: 872

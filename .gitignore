@@ -1,0 +1,11 @@
+/data/*
+!/data/.gitignore
+/model.pt
+/metrics.json
+/predictions.json
+*.pt
+*.pth
+*.onnx
+*.bin
+__pycache__/
+*.pyc

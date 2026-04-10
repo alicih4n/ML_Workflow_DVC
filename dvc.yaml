@@ -1,0 +1,34 @@
+# dvc.yaml
+stages:
+  prepare:
+    cmd: /opt/homebrew/Caskroom/miniconda/base/bin/python src/prepare.py
+    deps:
+      - src/prepare.py
+    outs:
+      - data/processed
+
+  train:
+    cmd: /opt/homebrew/Caskroom/miniconda/base/bin/python src/train.py
+    deps:
+      - src/train.py
+      - data/processed
+    params:
+      - epochs
+      - lr
+      - batch_size
+      - activation
+      - optimizer
+      - momentum
+    outs:
+      - model.pt
+    metrics:
+      - metrics.json
+
+  predict:
+    cmd: /opt/homebrew/Caskroom/miniconda/base/bin/python src/predict.py
+    deps:
+      - src/predict.py
+      - model.pt
+      - data/processed/test.pt
+    outs:
+      - predictions.json
